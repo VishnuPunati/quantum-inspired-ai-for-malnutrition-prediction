@@ -23,13 +23,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Create tables if not exist
+
 Base.metadata.create_all(bind=engine)
 
-
-# =========================
-# Pydantic Models
-# =========================
 
 class Patient(BaseModel):
     patient_name: str
@@ -39,18 +35,11 @@ class Patient(BaseModel):
     iron: float
 
 
-# =========================
-# Health Check
-# =========================
-
 @app.get("/")
 def home():
     return {"message": "Quantum Care Backend Running"}
 
 
-# =========================
-# Register
-# =========================
 
 @app.post("/register")
 def register(name: str, email: str, password: str, db: Session = Depends(get_db)):
@@ -73,10 +62,6 @@ def register(name: str, email: str, password: str, db: Session = Depends(get_db)
 
     return {"message": "User registered successfully"}
 
-
-# =========================
-# Login
-# =========================
 
 @app.post("/login")
 def login(email: str, password: str, db: Session = Depends(get_db)):
@@ -108,9 +93,6 @@ def get_profile(
         "status": "Active"
     }
 
-# =========================
-# Predict
-# =========================
 
 @app.post("/predict")
 def predict(
@@ -143,7 +125,7 @@ def predict(
         "NORMAL"
     )
 
-    # Recommendations
+
     recommendations = []
 
     if data.vitamin_A < 20:
@@ -161,7 +143,6 @@ def predict(
     if not recommendations:
         recommendations.append("Maintain a balanced nutritious diet")
 
-    # Save report
     report = Report(
         user_id=current_user.id,
         patient_name=data.patient_name,
@@ -183,10 +164,6 @@ def predict(
         "recommendations": recommendations
     }
 
-
-# =========================
-# History
-# =========================
 
 @app.get("/history")
 def get_history(

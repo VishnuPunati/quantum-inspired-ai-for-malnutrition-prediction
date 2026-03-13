@@ -33,7 +33,7 @@ X_train, X_test, y_train, y_test = train_test_split(
     test_size=0.25,
     random_state=42,
     stratify=y
-)
+) 
 
 X_train_q = X_train[:300]
 y_train_q = y_train[:300]
