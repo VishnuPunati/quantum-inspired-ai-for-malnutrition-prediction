@@ -26,7 +26,10 @@ if not os.path.exists(CLASSICAL_MODEL_PATH):
 if not os.path.exists(SCALER_PATH):
     raise FileNotFoundError(f"Scaler not found at {SCALER_PATH}")
 
-quantum_model = joblib.load(QUANTUM_MODEL_PATH)
+try:
+    quantum_model = joblib.load(QUANTUM_MODEL_PATH)
+except Exception:
+    quantum_model = None
 classical_model = joblib.load(CLASSICAL_MODEL_PATH)
 scaler = joblib.load(SCALER_PATH)
 

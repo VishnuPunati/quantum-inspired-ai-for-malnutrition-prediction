@@ -1,0 +1,8 @@
+.activity-logs/
+__pycache__/
+model/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+.venv310/
